@@ -199,7 +199,7 @@ namespace EnterpriseWeb.Controllers
         // GET: Department/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            ViewBag.Layout = Layout2;
+            ViewBag.Layout = Layout;
             if (id == null)
             {
                 return NotFound();
@@ -219,7 +219,7 @@ namespace EnterpriseWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            ViewBag.Layout = Layout2;
+            ViewBag.Layout = Layout;
             var department = await _context.Department.FindAsync(id);
             var users = await _context.Users.Where(o => o.Department == department).ToListAsync();
 
