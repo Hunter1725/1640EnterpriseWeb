@@ -311,7 +311,7 @@ namespace EnterpriseWeb.Controllers
 
         [Authorize(Roles = "Admin,Staff")]
         // GET: Idea
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber)
         {
             ViewData["CurrentFilter"] = searchString;
             var enterpriseWebContext = from e in _context.Idea
@@ -355,8 +355,9 @@ namespace EnterpriseWeb.Controllers
             var messageClass = TempData["messageClass"]?.ToString();
             ViewData["message"] = message;
             ViewData["messageClass"] = messageClass;
+            int pageSize = 5;
             ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(await enterpriseWebContext.AsNoTracking().ToListAsync());
+            return View(await PaginatedList<Idea>.CreateAsync(enterpriseWebContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
         [Authorize(Roles = "Admin, QACoordinator, QAManager, Staff")]
         public async Task<IActionResult> Filter(string currentFilter, string searchString, int? pageNumber)
