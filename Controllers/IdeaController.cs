@@ -233,7 +233,12 @@ namespace EnterpriseWeb.Controllers
                     worksheet.Cells[row, 5].Value = idea.Ratings.GroupBy(u => u.IdeaID).Sum(g => g.Sum(u => u.RatingDown));
                     worksheet.Cells[row, 6].Value = idea.Viewings.GroupBy(v => v.IdeaId).Sum(g => g.Sum(v => v.Count));
                     worksheet.Cells[row, 7].Value = idea.SubmissionDate.ToString();
-                    worksheet.Cells[row, 8].Value = idea.Department.Name;
+                    if(idea.Department != null){
+                        worksheet.Cells[row, 8].Value = idea.Department.Name;
+                    }
+                    else{
+                        worksheet.Cells[row, 8].Value = "None";
+                    }
                     worksheet.Cells[row, 9].Value = idea.ClosureDate.ClousureDate.ToString();
 
 
